@@ -8,14 +8,17 @@ import sys
 import traceback
 
 # Đảm bảo import được các module trong package
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
 from agent.expansion_agent import ExpansionDecisionAgent
 from agent.audit_logger import AuditLogger
 from agent.data_parsers import DataIngestionEngine
 from agent.workflow_engine import WorkflowEngine
+import tempfile
 
-PORT = 8080
+PORT = int(os.environ.get("PORT", 8080))
 
 class AgentServerHandler(BaseHTTPRequestHandler):
     def end_headers(self):
@@ -29,25 +32,28 @@ class AgentServerHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
-            with open("ui/index.html", "r", encoding="utf-8") as f:
+            index_path = os.path.join(BASE_DIR, "ui", "index.html")
+            with open(index_path, "r", encoding="utf-8") as f:
                 self.wfile.write(f.read().encode("utf-8"))
         elif url_parsed.path == "/download_sample_csv":
             self.send_response(200)
             self.send_header("Content-Type", "text/csv; charset=utf-8")
             self.send_header("Content-Disposition", "attachment; filename=file_mau_dung_dinh_dang_hungphat.csv")
             self.end_headers()
-            with open("data/file_mau_dung_dinh_dang_hungphat.csv", "rb") as f:
+            csv_path = os.path.join(BASE_DIR, "data", "file_mau_dung_dinh_dang_hungphat.csv")
+            with open(csv_path, "rb") as f:
                 self.wfile.write(f.read())
         elif url_parsed.path == "/download_sample_xlsx":
             self.send_response(200)
             self.send_header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             self.send_header("Content-Disposition", "attachment; filename=file_mau_dung_dinh_dang_hungphat.xlsx")
             self.end_headers()
-            with open("data/file_mau_dung_dinh_dang_hungphat.xlsx", "rb") as f:
+            xlsx_path = os.path.join(BASE_DIR, "data", "file_mau_dung_dinh_dang_hungphat.xlsx")
+            with open(xlsx_path, "rb") as f:
                 self.wfile.write(f.read())
         elif url_parsed.path.startswith("/assets/"):
             file_name = url_parsed.path.replace("/assets/", "")
-            file_path = os.path.join("ui", "assets", file_name)
+            file_path = os.path.join(BASE_DIR, "ui", "assets", file_name)
             if os.path.exists(file_path):
                 self.send_response(200)
                 if file_name.endswith(".jpg") or file_name.endswith(".jpeg"):
@@ -65,11 +71,11 @@ class AgentServerHandler(BaseHTTPRequestHandler):
             query = urllib.parse.parse_qs(url_parsed.query)
             preset_name = query.get("name", ["standard"])[0]
             file_map = {
-                "standard": "data/dataset_standard.json",
-                "missing": "data/dataset_missing_info.json",
-                "boundary": "data/dataset_boundary_case.json"
+                "standard": os.path.join(BASE_DIR, "data", "dataset_standard.json"),
+                "missing": os.path.join(BASE_DIR, "data", "dataset_missing_info.json"),
+                "boundary": os.path.join(BASE_DIR, "data", "dataset_boundary_case.json")
             }
-            target_file = file_map.get(preset_name, "data/dataset_standard.json")
+            target_file = file_map.get(preset_name, os.path.join(BASE_DIR, "data", "dataset_standard.json"))
             with open(target_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
             self._send_json({"status": "success", "data": data})
@@ -106,10 +112,10 @@ class AgentServerHandler(BaseHTTPRequestHandler):
                         raw_data = validation.get("raw_data")
                     elif source_type == "preset":
                         preset_file = {
-                            "standard": "data/dataset_standard.json",
-                            "missing": "data/dataset_missing_info.json",
-                            "boundary": "data/dataset_boundary_case.json"
-                        }.get(preset_name, "data/dataset_standard.json")
+                            "standard": os.path.join(BASE_DIR, "data", "dataset_standard.json"),
+                            "missing": os.path.join(BASE_DIR, "data", "dataset_missing_info.json"),
+                            "boundary": os.path.join(BASE_DIR, "data", "dataset_boundary_case.json")
+                        }.get(preset_name, os.path.join(BASE_DIR, "data", "dataset_standard.json"))
                         with open(preset_file, "r", encoding="utf-8") as f:
                             raw_data = json.load(f)
                     elif source_type == "csv_content":
@@ -121,7 +127,7 @@ class AgentServerHandler(BaseHTTPRequestHandler):
                             return
                     elif source_type == "xlsx_base64":
                         b64_data = payload.get("content_base64", "")
-                        temp_xlsx = "data/temp_upload.xlsx"
+                        temp_xlsx = os.path.join(tempfile.gettempdir(), "temp_upload.xlsx")
                         with open(temp_xlsx, "wb") as f:
                             f.write(base64.b64decode(b64_data))
                         try:

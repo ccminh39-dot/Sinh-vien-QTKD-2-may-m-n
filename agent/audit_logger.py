@@ -11,7 +11,10 @@ class AuditLogger:
     """
     def __init__(self, log_dir: str = "logs"):
         self.log_dir = log_dir
-        os.makedirs(self.log_dir, exist_ok=True)
+        try:
+            os.makedirs(self.log_dir, exist_ok=True)
+        except Exception:
+            pass
         self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.log_file = os.path.join(self.log_dir, f"audit_trace_{self.session_id}.jsonl")
         self.events: List[Dict[str, Any]] = []
@@ -27,8 +30,12 @@ class AuditLogger:
             "metadata": metadata or {}
         }
         self.events.append(event)
-        with open(self.log_file, "a", encoding="utf-8") as f:
-            f.write(json.dumps(event, ensure_ascii=False) + "\n")
+        try:
+            with open(self.log_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(event, ensure_ascii=False) + "\n")
+        except Exception:
+            # Tren moi truong Serverless nhu Vercel (read-only filesystem), luu tru in-memory
+            pass
 
     def export_summary(self) -> Dict[str, Any]:
         return {
