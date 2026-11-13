@@ -66,4 +66,4 @@
 > Toàn bộ dữ liệu của các địa bàn được đề xuất đều hợp lệ, không có xung đột nghiêm trọng và nằm trong hạn mức an toàn của công ty.
 
 ---
-*Báo cáo được khởi tạo tự động bởi HP-Expansion-Agent. File Audit Trace: `logs\audit_trace_20261111_150101.jsonl`*
+*Báo cáo được khởi tạo tự động bởi HP-Expansion-Agent. File Audit Trace: `logs\audit_trace_20261113_133826.jsonl`*

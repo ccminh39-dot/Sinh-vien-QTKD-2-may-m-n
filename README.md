@@ -1,74 +1,115 @@
-# HP-Expansion-Agent: AI Agent Đánh Giá Thị Trường Mở Rộng Kinh Doanh
+# HP-Expansion-Agent: AI Agent Thẩm Định Mở Rộng Thị Trường B2B WMS
 **Học phần:** AI301 | **Đề số:** 04  
 **Doanh nghiệp giả định:** Công ty Cổ phần Giải pháp Công nghệ Hưng Phát (Giải pháp quản lý kho HP-WMS cho chuỗi bán lẻ)
 
 ---
 
-## 📌 1. Cấu trúc Thư mục Dự án
+## 📌 1. Cấu Trúc Dự Án (Chuẩn Git Repository)
 
-```
+```text
 hungphat_expansion_agent/
-├── data/
-│   ├── dataset_standard.json       # Kịch bản 1: Dữ liệu thông thường (4 địa bàn)
-│   ├── dataset_missing_info.json   # Kịch bản 2: Dữ liệu thiếu thông tin / mâu thuẫn
-│   └── dataset_boundary_case.json  # Kịch bản 3: Dữ liệu chạm trần ranh giới quy tắc
-├── agent/
+├── .gitignore                      # Cấu hình bỏ qua tệp rác, venv, cache khi đẩy lên GitHub
+├── .env.example                    # Mẫu cấu hình môi trường (API Key Gemini tùy chọn)
+├── requirements.txt                # Danh sách thư viện (100% Python Standard Library, không lỗi thiếu thư viện)
+├── README.md                       # Hướng dẫn chi tiết triển khai & bảo vệ
+├── DEFENSE_GUIDE.md                # Kịch bản bảo vệ trước hội đồng giám khảo
+├── run_web_ui.bat                  # [1-Click] Khởi động Giao diện Web trên Windows (Tự nhận diện Python)
+├── run_web_ui.ps1                  # Khởi động Giao diện Web bằng PowerShell
+├── run_tests.bat                   # [1-Click] Chạy bộ kiểm thử tự động 3 kịch bản
+├── run_cli_agent.bat               # [1-Click] Chạy Agent chế độ dòng lệnh CLI
+├── run_agent.py                    # Điểm thực thi chính thức của Agent qua CLI
+├── web_server.py                   # Máy chủ Web Server đa luồng (Port 8080)
+├── agent/                          # Mã nguồn nghiệp vụ AI Agent & State Machine
 │   ├── __init__.py
-│   ├── tools.py                    # 3 Kỹ năng nghiệp vụ phối hợp (FactVerification, FitGap, Scorer)
-│   ├── audit_logger.py             # Module ghi nhật ký truy vết (Audit Trail & Execution Trace)
-│   └── expansion_agent.py          # AI Agent điều phối quy trình tự động & HITL
+│   ├── config.py                   # Cấu hình tham số hệ thống
+│   ├── audit_logger.py             # Truy vết hoạt động (Audit Trail & Grounded Citations)
+│   ├── data_parsers.py             # Bộ nạp dữ liệu (Google Sheets, CSV, Excel XLSX, JSON)
+│   ├── expansion_agent.py          # Bộ não Agent điều phối thẩm định & HITL
+│   ├── llm_engine.py               # Kết nối Gemini AI + Bộ nhận định chiến lược dự phòng
+│   ├── tools.py                    # Kỹ năng FactVerification, FitGap & Scorer
+│   └── workflow_engine.py          # Động cơ State Machine 5 bước tương tác
+├── data/                           # Bộ dữ liệu mẫu chuẩn (CSV, Excel XLSX, JSON)
+│   ├── dataset_standard.json       # Kịch bản 1: Chuẩn
+│   ├── dataset_missing_info.json   # Kịch bản 2: Thiếu dữ liệu / Cần phản hồi
+│   ├── dataset_boundary_case.json  # Kịch bản 3: Ranh giới quy tắc Onsite
+│   ├── file_mau_dung_dinh_dang_hungphat.csv   # Mẫu CSV cho người dùng
+│   ├── file_mau_dung_dinh_dang_hungphat.xlsx  # Mẫu Excel cho người dùng
+│   └── sample_territories.csv      # Bảng 4 địa bàn mẫu
+├── logs/                           # Thư mục lưu vết nhật ký thực thi (JSONL)
+├── reports/                        # Nơi lưu báo cáo Markdown xuất tự động
 ├── tests/
-│   └── test_cases.py               # Bộ kiểm thử tự động 3 kịch bản theo yêu cầu đề bài
-├── reports/                        # Nơi lưu báo cáo Markdown xuất tự động cho Ban Giám đốc
-├── logs/                           # Nơi lưu vết JSON Lines toàn bộ thao tác Agent và công cụ
-├── run_agent.py                    # Script chạy chính thức (Entrypoint nạp dữ liệu tại buổi thi)
-└── README.md                       # Tài liệu hướng dẫn hệ thống
+│   └── test_cases.py               # Bộ kiểm thử tự động 3 ca kiểm thử
+└── ui/                             # Giao diện Web Editorial Magazine & PDF Guru Dropzone
+    ├── index.html                  # Giao diện đơn trang hoàn chỉnh
+    └── assets/
+        └── hero_bg.jpg             # Ảnh phong cảnh thiên nhiên dãy núi Thụy Sĩ
 ```
 
 ---
 
-## 🚀 2. Hướng dẫn Chạy Chương trình tại Buổi Thi
+## 🚀 2. Hướng Dẫn Clone & Chạy Trên Máy Mới (Không Bị Lỗi)
 
-### 2.1. Chạy với Bộ Dữ liệu Mặc định (hoặc Bộ Dữ liệu Mới của Giảng viên):
-Giảng viên chỉ cần đặt file JSON dữ liệu mới và chạy lệnh:
-```bash
-python run_agent.py --data path/to/new_dataset.json
-```
-*(Nếu dùng môi trường Python máy thi, chỉ cần chỉ định đúng đường dẫn file dữ liệu JSON).*
+### 2.1. Yêu Cầu Môi Trường
+- **Python:** Phiên bản 3.9 trở lên (Khuyến nghị 3.10, 3.11, 3.12, 3.13).
+- **Hệ điều hành:** Windows 10/11, macOS hoặc Linux.
+- **Thư viện:** Dự án sử dụng **100% Python Standard Library** (`http.server`, `urllib`, `json`, `zipfile`, `xml.etree`, `re`, `csv`), **KHÔNG bắt buộc cài thêm thư viện ngoài**, đảm bảo chạy ngay trên mọi máy mà không bị lỗi thiếu package.
 
-### 2.2. Chạy Bộ Kiểm thử Tự động (Automated Test Suite - 3 Kịch bản):
+### 2.2. Khởi Động Giao Diện Web (Khuyến Nghị):
+Chỉ cần **nhấp đúp chuột** vào tệp:
+👉 **`run_web_ui.bat`**
+
+*Tệp `.bat` đã được trang bị cơ chế tự động dò tìm Python (trong PATH, py launcher, hoặc venv) và tự động mở trình duyệt tại `http://localhost:8080/`.*
+
+### 2.3. Chạy Bằng Dòng Lệnh (CLI):
 ```bash
+# 1. Chạy máy chủ Web
+python web_server.py
+
+# 2. Hoặc chạy kiểm thử tự động 3 kịch bản
 python tests/test_cases.py
-```
-Kết quả kiểm thử sẽ kiểm tra tự động:
-- **Case 1 (Thông thường):** Lọc số liệu trùng, loại địa bàn đòi hỏi Onsite 24/7 và chọn đúng 2 địa bàn tốt nhất.
-- **Case 2 (Thiếu dữ liệu / Mâu thuẫn):** Phát hiện thiếu hồ sơ đối thủ, thiếu yêu cầu hỗ trợ, phát hiện chênh lệch mâu thuẫn >30% và kích hoạt cờ HITL.
-- **Case 3 (Ranh giới quy tắc):** Bắt đúng ngưỡng sàn fit_score 60.0 và cảnh báo chạm trần hỗ trợ On-site cho cấp quản lý duyệt.
 
----
-
-## 🔍 3. Quy chuẩn Dữ liệu Đầu vào (Data Schema)
-Bộ dữ liệu gồm các trường JSON chuẩn:
-```json
-{
-  "company_profile": { ... },       // Năng lực HP-WMS và chính sách triển khai
-  "evaluation_criteria": { ... },   // Trọng số tiêu chí & Quy tắc loại trừ cứng (Exclusion Rules)
-  "territories": [                  // Danh sách 4 địa bàn khảo sát
-    {
-      "id": "TERR_01",
-      "name": "Tên địa bàn",
-      "market_reports": [ ... ],    // Nguồn, kỳ thống kê, số lượng chuỗi, dung lượng thị trường
-      "competitors": [ ... ],       // Danh sách đối thủ, thị phần, ưu/nhược điểm
-      "customer_demands": { ... }   // Mẫu khảo sát, tính năng yêu cầu, hình thức hỗ trợ on-site/remote
-    }
-  ]
-}
+# 3. Hoặc chạy Agent CLI với tệp dữ liệu chỉ định
+python run_agent.py --data data/dataset_standard.json
 ```
 
 ---
 
-## 🛡️ 4. Cơ chế Đảm bảo Minh bạch & Tránh Hallucination
-- **Phân tách rạch ròi [FACT] vs [INFERENCE]:** Số liệu thị trường bắt buộc trích dẫn từ tài liệu nguồn; suy luận của Agent được gắn nhãn riêng.
-- **Nhật ký truy vết (Audit Trail):** Mỗi lượt gọi tool được ghi lại trong `logs/audit_trace_*.jsonl` với timestamp, inputs, outputs, và quy tắc áp dụng.
-- **Human-in-the-Loop (HITL):** Các trường hợp rủi ro cao hoặc thiếu căn cứ đều được chuyển thành Cờ cảnh báo (Flags) cho Trưởng phòng phê duyệt trước khi hành động.
+## 📤 3. Hướng Dẫn Đẩy Lên GitHub & Kéo Về Dự Án Mới
 
+### 3.1. Đẩy Từ Thư Mục Này Lên GitHub:
+Mở Terminal / PowerShell tại thư mục `hungphat_expansion_agent`:
+```bash
+# 1. Khởi tạo Git
+git init
+
+# 2. Thêm toàn bộ tệp (đã có .gitignore tự lọc tệp rác)
+git add .
+
+# 3. Tạo commit đầu tiên
+git commit -m "feat: complete hungphat expansion ai agent with state machine web ui"
+
+# 4. Đổi tên nhánh chính thành main
+git branch -M main
+
+# 5. Gắn link repository GitHub của bạn (thay bằng link của bạn)
+git remote add origin https://github.com/YOUR_USERNAME/hungphat_expansion_agent.git
+
+# 6. Đẩy mã nguồn lên
+git push -u origin main
+```
+
+### 3.2. Khi Kéo Về Máy Khác (Clone to New Machine):
+```bash
+git clone https://github.com/YOUR_USERNAME/hungphat_expansion_agent.git
+cd hungphat_expansion_agent
+
+# Nhấp đúp vào run_web_ui.bat là chạy được ngay!
+```
+
+---
+
+## 🛡️ 4. Các Quy Chuẩn Nghiệp Vụ Quan Trọng
+1. **Bảo Toàn File Gốc:** Hệ thống chỉ đọc dữ liệu từ Google Sheets, CSV hoặc Excel; tuyệt đối không ghi đè, không tự ý sửa đổi tệp gốc của người gửi.
+2. **Quy Tắc Ranh Giới On-site (RULE_EXCLUDE_ONSITE_OVERLOAD):** Giới hạn tối đa 4 kỹ sư triển khai, chưa có chi nhánh địa phương, tự động loại trừ địa bàn đòi hỏi Onsite 24/7.
+3. **Phân Tách [FACT] và [INFERENCE]:** Mọi số liệu báo cáo đều có căn cứ xuất xứ rõ ràng, chống hiện tượng ảo giác (hallucination).
+4. **Human-in-the-Loop (HITL):** Khi phát hiện thiếu dữ liệu hoặc vi phạm chính sách, hệ thống dừng lại kích hoạt ô Feedback cho chuyên viên can thiệp.

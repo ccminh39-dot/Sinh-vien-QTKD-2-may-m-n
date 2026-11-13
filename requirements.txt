@@ -1,0 +1,13 @@
+# ===============================================================================
+# Hưng Phát Expansion AI Agent - Requirements
+# ===============================================================================
+# Hệ thống được thiết kế sử dụng 100% Python Standard Library
+# (json, urllib, http.server, socketserver, zipfile, xml.etree, csv, re, v.v.)
+# Do đó, bạn KHÔNG bắt buộc phải cài đặt thêm bất kỳ thư viện ngoài nào để chạy!
+#
+# Yêu cầu phiên bản Python: Python 3.9 trở lên (Khuyến nghị 3.10, 3.11, 3.12, 3.13)
+#
+# Các gói mở rộng tùy chọn (Optional for development / enhanced Excel support):
+# openpyxl>=3.1.0
+# requests>=2.31.0
+
