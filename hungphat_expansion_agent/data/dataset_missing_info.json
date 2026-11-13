@@ -1,0 +1,104 @@
+{
+  "company_profile": {
+    "name": "Công ty Cổ phần Giải pháp Công nghệ Hưng Phát",
+    "solution_name": "HP-WMS (Quản lý kho thông minh cho bán lẻ)",
+    "core_capabilities": [
+      "Quản lý tồn kho đa kênh thời gian thực (Omnichannel Inventory)",
+      "Tối ưu lộ trình lấy hàng bằng mã vạch/QR",
+      "Tích hợp sàn TMĐT và phần mềm bán hàng POS thông dụng",
+      "Báo cáo cảnh báo hạn dùng và dự báo nhập hàng cơ bản"
+    ],
+    "unsupported_capabilities": [
+      "Tự động hóa kho lạnh robotized (Automated Cold-Chain Robotics)",
+      "Hệ thống phân loại tự động siêu trọng (Heavy Sorting Automation)"
+    ],
+    "deployment_capacity": {
+      "max_parallel_expansions": 1,
+      "max_onsite_support_teams": 1,
+      "available_engineers": 4,
+      "policy": "Chỉ chấp nhận địa bàn yêu cầu hỗ trợ on-site tối đa 2 kỹ sư/tuần hoặc chuyển đổi được sang hình thức Remote Support 8/5. Không mở rộng vào địa bàn bắt buộc cam kết On-site 24/7 tức thì khi chưa có chi nhánh."
+    }
+  },
+  "evaluation_criteria": {
+    "weights": {
+      "market_size_and_growth": 0.25,
+      "solution_fit": 0.30,
+      "competitive_advantage": 0.20,
+      "operational_feasibility": 0.25
+    },
+    "exclusion_rules": [
+      {
+        "id": "RULE_EXCLUDE_ONSITE_OVERLOAD",
+        "description": "Loại bỏ ngay địa bàn bắt buộc hỗ trợ On-site 24/7 vượt quá năng lực đội ngũ Hưng Phát.",
+        "condition": "onsite_requirement_exceeds_capacity == true"
+      },
+      {
+        "id": "RULE_MINIMUM_FIT_SCORE",
+        "description": "Điểm khớp giải pháp (solution_fit) phải đạt tối thiểu 60/100.",
+        "condition": "solution_fit_score < 60"
+      }
+    ]
+  },
+  "territories": [
+    {
+      "id": "TERR_01",
+      "name": "Địa bàn Miền Đông",
+      "market_reports": [
+        { "source": "Báo cáo Hiệp hội Bán lẻ 2024", "period": "2024", "retail_chains_count": 85, "estimated_market_value_vnd": "120 tỷ", "annual_growth_rate": "18%" }
+      ],
+      "competitors": [
+        { "name": "Vendor X", "market_share": "40%", "strength": "Giá rẻ", "weakness": "Lỗi đồng bộ" }
+      ],
+      "customer_demands": {
+        "sample_size": 20,
+        "key_feature_requests": ["Quản lý tồn kho đa kênh", "Tích hợp mã vạch QR"],
+        "support_requirement": "Hỗ trợ Online hành chính, Onsite 1 buổi"
+      }
+    },
+    {
+      "id": "TERR_02",
+      "name": "Địa bàn Tây Nam (THIẾU HỒ SƠ ĐỐI THỦ)",
+      "market_reports": [
+        { "source": "Báo cáo Mekong 2023", "period": "2023", "retail_chains_count": 60, "estimated_market_value_vnd": "80 tỷ", "annual_growth_rate": "14%" }
+      ],
+      "competitors": [],
+      "customer_demands": {
+        "sample_size": 15,
+        "key_feature_requests": ["Tối ưu lộ trình lấy hàng"],
+        "support_requirement": "Onsite 2 ngày chuyển giao"
+      }
+    },
+    {
+      "id": "TERR_03",
+      "name": "Địa bàn Duyên Hải (MÂU THUẪN DỮ LIỆU THỊ TRƯỜNG)",
+      "market_reports": [
+        { "source": "Nguồn Viện Nghiên cứu A", "period": "2024", "retail_chains_count": 150, "estimated_market_value_vnd": "250 tỷ", "annual_growth_rate": "25%" },
+        { "source": "Nguồn Cục Thống kê B", "period": "2024", "retail_chains_count": 70, "estimated_market_value_vnd": "90 tỷ", "annual_growth_rate": "8%", "conflict_note": "Chênh lệch số liệu hơn 100% giữa 2 nguồn chính thức" }
+      ],
+      "competitors": [
+        { "name": "Vendor C", "market_share": "50%", "strength": "Toàn cầu", "weakness": "Đắt" }
+      ],
+      "customer_demands": {
+        "sample_size": 10,
+        "key_feature_requests": ["Kho thông minh"],
+        "support_requirement": "Onsite 24/7"
+      }
+    },
+    {
+      "id": "TERR_04",
+      "name": "Địa bàn Cao Nguyên (THIẾU YÊU CẦU HỖ TRỢ KỸ THUẬT)",
+      "market_reports": [
+        { "source": "Tạp chí Logistics 2024", "period": "2024", "retail_chains_count": 40, "estimated_market_value_vnd": "50 tỷ", "annual_growth_rate": "10%" }
+      ],
+      "competitors": [
+        { "name": "Vendor D", "market_share": "30%", "strength": "Quan hệ tốt", "weakness": "Công nghệ cũ" }
+      ],
+      "customer_demands": {
+        "sample_size": 12,
+        "key_feature_requests": ["Cảnh báo hạn dùng"],
+        "support_requirement": null
+      }
+    }
+  ]
+}
+

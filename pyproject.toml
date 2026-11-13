@@ -6,9 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "hungphat-expansion-agent"
 version = "1.0.0"
 description = "Hưng Phát AI Agent Thẩm Định Mở Rộng Thị Trường"
-readme = "README.md"
+readme = "hungphat_expansion_agent/README.md"
 requires-python = ">=3.9"
 
 [tool.vercel]
-entrypoint = "api/index.py"
+entrypoint = "index.py"
 
