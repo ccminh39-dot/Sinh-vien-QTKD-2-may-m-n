@@ -1,0 +1,110 @@
+{
+  "company_profile": {
+    "name": "Công ty Cổ phần Giải pháp Công nghệ Hưng Phát",
+    "solution_name": "HP-WMS (Quản lý kho thông minh cho bán lẻ)",
+    "core_capabilities": [
+      "Quản lý tồn kho đa kênh thời gian thực (Omnichannel Inventory)",
+      "Tối ưu lộ trình lấy hàng bằng mã vạch/QR",
+      "Tích hợp sàn TMĐT và phần mềm bán hàng POS thông dụng",
+      "Báo cáo cảnh báo hạn dùng và dự báo nhập hàng cơ bản"
+    ],
+    "unsupported_capabilities": [
+      "Tự động hóa kho lạnh robotized (Automated Cold-Chain Robotics)",
+      "Hệ thống phân loại tự động siêu trọng (Heavy Sorting Automation)"
+    ],
+    "deployment_capacity": {
+      "max_parallel_expansions": 1,
+      "max_onsite_support_teams": 1,
+      "available_engineers": 4,
+      "policy": "Chỉ chấp nhận địa bàn yêu cầu hỗ trợ on-site tối đa 2 kỹ sư/tuần hoặc chuyển đổi được sang hình thức Remote Support 8/5. Không mở rộng vào địa bàn bắt buộc cam kết On-site 24/7 tức thì khi chưa có chi nhánh."
+    }
+  },
+  "evaluation_criteria": {
+    "weights": {
+      "market_size_and_growth": 0.25,
+      "solution_fit": 0.30,
+      "competitive_advantage": 0.20,
+      "operational_feasibility": 0.25
+    },
+    "exclusion_rules": [
+      {
+        "id": "RULE_EXCLUDE_ONSITE_OVERLOAD",
+        "description": "Loại bỏ ngay địa bàn bắt buộc hỗ trợ On-site 24/7 vượt quá năng lực đội ngũ Hưng Phát.",
+        "condition": "onsite_requirement_exceeds_capacity == true"
+      },
+      {
+        "id": "RULE_MINIMUM_FIT_SCORE",
+        "description": "Điểm khớp giải pháp (solution_fit) phải đạt tối thiểu 60/100.",
+        "condition": "solution_fit_score < 60"
+      }
+    ]
+  },
+  "territories": [
+    {
+      "id": "TERR_BOUND_01",
+      "name": "Địa bàn Alpha (Thị trường khổng lồ nhưng sát ranh giới Onsite)",
+      "market_reports": [
+        { "source": "Báo cáo Thị trường Vùng 2024", "period": "2024", "retail_chains_count": 200, "estimated_market_value_vnd": "300 tỷ", "annual_growth_rate": "25%" }
+      ],
+      "competitors": [
+        { "name": "Vendor Cổ điển", "market_share": "20%", "strength": "Giá rẻ", "weakness": "Kém" }
+      ],
+      "customer_demands": {
+        "sample_size": 40,
+        "key_feature_requests": ["Quản lý tồn kho đa kênh", "Tối ưu lộ trình"],
+        "support_requirement": "Yêu cầu 2 kỹ sư onsite liên tục 2 tuần đầu tiên (Chạm đúng trần tối đa năng lực hiện tại của Hưng Phát)"
+      }
+    },
+    {
+      "id": "TERR_BOUND_02",
+      "name": "Địa bàn Beta (Điểm Solution Fit đúng bằng 60.0 - Ngưỡng ranh giới sàn)",
+      "market_reports": [
+        { "source": "Báo cáo Khu vực 2024", "period": "2024", "retail_chains_count": 50, "estimated_market_value_vnd": "65 tỷ", "annual_growth_rate": "12%" }
+      ],
+      "competitors": [
+        { "name": "Vendor Địa phương", "market_share": "30%", "strength": "Quan hệ", "weakness": "Phần mềm cũ" }
+      ],
+      "customer_demands": {
+        "sample_size": 15,
+        "key_feature_requests": [
+          "Quản lý tồn kho đa kênh",
+          "Tự động hóa kho lạnh robotized (Tính năng chưa hỗ trợ)",
+          "Báo cáo cảnh báo hạn dùng",
+          "Hệ thống phân loại tự động siêu trọng (Tính năng chưa hỗ trợ)"
+        ],
+        "support_requirement": "Hỗ trợ từ xa (Remote)"
+      }
+    },
+    {
+      "id": "TERR_BOUND_03",
+      "name": "Địa bàn Gamma (Vượt trần năng lực On-site - Vi phạm Exclusion Rule)",
+      "market_reports": [
+        { "source": "Báo cáo Công nghiệp 2024", "period": "2024", "retail_chains_count": 180, "estimated_market_value_vnd": "280 tỷ", "annual_growth_rate": "30%" }
+      ],
+      "competitors": [
+        { "name": "Vendor TechCorp", "market_share": "15%", "strength": "Nền tảng tốt", "weakness": "Giá đắt" }
+      ],
+      "customer_demands": {
+        "sample_size": 35,
+        "key_feature_requests": ["Quản lý tồn kho đa kênh", "Tích hợp POS"],
+        "support_requirement": "Bắt buộc túc trực On-site 24/7 có mặt trong 15 phút tại 3 kho trung tâm"
+      }
+    },
+    {
+      "id": "TERR_BOUND_04",
+      "name": "Địa bàn Delta (Điểm an toàn trung bình, không vi phạm)",
+      "market_reports": [
+        { "source": "Báo cáo Hiệp hội Bán lẻ 2024", "period": "2024", "retail_chains_count": 70, "estimated_market_value_vnd": "90 tỷ", "annual_growth_rate": "15%" }
+      ],
+      "competitors": [
+        { "name": "Giải pháp Excel", "market_share": "60%", "strength": "Không tốn phí", "weakness": "Thất thoát lớn" }
+      ],
+      "customer_demands": {
+        "sample_size": 20,
+        "key_feature_requests": ["Quản lý tồn kho đa kênh", "Tối ưu lộ trình"],
+        "support_requirement": "Onsite 1 ngày đào tạo và hỗ trợ trực tuyến"
+      }
+    }
+  ]
+}
+

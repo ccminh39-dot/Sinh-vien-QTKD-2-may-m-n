@@ -1,0 +1,6 @@
+id,name,retail_chains_count,annual_growth_rate,estimated_market_value,source,period,note,competitor,competitor_share,competitor_weakness,demanded_features,support_requirement
+TERR_01,Địa bàn Miền Đông (Vùng Đô thị A),85,18%,120 tỷ,Báo cáo Hiệp hội Bán lẻ 2024,2024,Số liệu mới nhất,Vendor X,40%,Hay lỗi đồng bộ sàn TMĐT,"Quản lý tồn kho đa kênh thời gian thực, Tích hợp máy quét QR mã vạch, Cảnh báo hạn dùng",Hỗ trợ Online hành chính và Onsite 1 buổi đào tạo
+TERR_02,Địa bàn Tây Nam (Cụm Bán lẻ B),60,14%,80 tỷ,Viện Nghiên cứu Mekong 2023,2023,,Giải pháp Excel tự phát,55%,Thất thoát tồn kho lớn,"Tối ưu lộ trình lấy hàng trong kho, Dễ dùng chi phí thấp",Onsite 2 ngày đầu triển khai rồi chuyển giao Remote
+TERR_03,Địa bàn Duyên Hải (Trung tâm Cảng C),120,22%,190 tỷ,Sở Công Thương Duyên Hải,2022,Kỳ thống kê cũ 2022,Vendor MegaGlobal,65%,Chi phí bản quyền quá cao,"Tự động hóa kho lạnh robotized, Phân loại hàng siêu trọng",Bắt buộc kỹ sư túc trực On-site 24/7 tại kho cảng
+TERR_04,Địa bàn Cao Nguyên (Vùng Phân phối D),35,9%,45 tỷ,Tạp chí Logistics Nông sản 2024,2024,,Vendor Cục bộ,25%,Công nghệ cổ lỗ,"Quản lý hạn sử dụng nông sản chế biến, Tích hợp mã vạch",Hỗ trợ từ xa và định kỳ 1 tháng kiểm tra 1 lần
+

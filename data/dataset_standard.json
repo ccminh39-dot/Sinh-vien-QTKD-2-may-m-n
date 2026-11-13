@@ -1,0 +1,152 @@
+{
+  "company_profile": {
+    "name": "Công ty Cổ phần Giải pháp Công nghệ Hưng Phát",
+    "solution_name": "HP-WMS (Quản lý kho thông minh cho bán lẻ)",
+    "core_capabilities": [
+      "Quản lý tồn kho đa kênh thời gian thực (Omnichannel Inventory)",
+      "Tối ưu lộ trình lấy hàng bằng mã vạch/QR",
+      "Tích hợp sàn TMĐT và phần mềm bán hàng POS thông dụng",
+      "Báo cáo cảnh báo hạn dùng và dự báo nhập hàng cơ bản"
+    ],
+    "unsupported_capabilities": [
+      "Tự động hóa kho lạnh robotized (Automated Cold-Chain Robotics)",
+      "Hệ thống phân loại tự động siêu trọng (Heavy Sorting Automation)"
+    ],
+    "deployment_capacity": {
+      "max_parallel_expansions": 1,
+      "max_onsite_support_teams": 1,
+      "available_engineers": 4,
+      "policy": "Chỉ chấp nhận địa bàn yêu cầu hỗ trợ on-site tối đa 2 kỹ sư/tuần hoặc chuyển đổi được sang hình thức Remote Support 8/5. Không mở rộng vào địa bàn bắt buộc cam kết On-site 24/7 tức thì khi chưa có chi nhánh."
+    }
+  },
+  "evaluation_criteria": {
+    "weights": {
+      "market_size_and_growth": 0.25,
+      "solution_fit": 0.30,
+      "competitive_advantage": 0.20,
+      "operational_feasibility": 0.25
+    },
+    "exclusion_rules": [
+      {
+        "id": "RULE_EXCLUDE_ONSITE_OVERLOAD",
+        "description": "Loại bỏ ngay địa bàn bắt buộc hỗ trợ On-site 24/7 vượt quá năng lực đội ngũ Hưng Phát.",
+        "condition": "onsite_requirement_exceeds_capacity == true"
+      },
+      {
+        "id": "RULE_MINIMUM_FIT_SCORE",
+        "description": "Điểm khớp giải pháp (solution_fit) phải đạt tối thiểu 60/100.",
+        "condition": "solution_fit_score < 60"
+      }
+    ]
+  },
+  "territories": [
+    {
+      "id": "TERR_01",
+      "name": "Địa bàn Miền Đông (Vùng Đô thị A)",
+      "market_reports": [
+        {
+          "source": "Báo cáo Hiệp hội Bán lẻ 2024",
+          "period": "2024",
+          "retail_chains_count": 85,
+          "estimated_market_value_vnd": "120 tỷ",
+          "annual_growth_rate": "18%"
+        },
+        {
+          "source": "Báo cáo Thị trường Logistics Miền Đông (Dẫn lại nguồn Hiệp hội Bán lẻ 2024)",
+          "period": "2024",
+          "retail_chains_count": 85,
+          "note": "Trùng lặp số liệu nguồn, quy mô không tăng thêm"
+        }
+      ],
+      "competitors": [
+        { "name": "Vendor X", "market_share": "40%", "strength": "Giá rẻ", "weakness": "Hay lỗi đồng bộ sàn TMĐT, hỗ trợ chậm" },
+        { "name": "Vendor Y", "market_share": "15%", "strength": "Chuyên POS", "weakness": "Phần WMS kho rất yếu, chỉ quản lý đơn giản" }
+      ],
+      "customer_demands": {
+        "sample_size": 25,
+        "key_feature_requests": [
+          "Quản lý tồn kho đa kênh thời gian thực (Omnichannel)",
+          "Tích hợp máy quét QR mã vạch tại quầy và kho",
+          "Cảnh báo hạn dùng theo lô hàng"
+        ],
+        "support_requirement": "Hỗ trợ Online trong giờ hành chính, onsite 1 buổi khi đào tạo ban đầu (Hoàn toàn nằm trong khả năng)"
+      }
+    },
+    {
+      "id": "TERR_02",
+      "name": "Địa bàn Tây Nam (Cụm Bán lẻ B)",
+      "market_reports": [
+        {
+          "source": "Viện Nghiên cứu Thị trường Mekong 2023",
+          "period": "2023",
+          "retail_chains_count": 60,
+          "estimated_market_value_vnd": "80 tỷ",
+          "annual_growth_rate": "14%"
+        }
+      ],
+      "competitors": [
+        { "name": "Giải pháp nội bộ tự phát (Excel/Access)", "market_share": "55%", "strength": "Miễn phí", "weakness": "Thường xuyên thất thoát tồn kho, không mở rộng được" },
+        { "name": "Vendor Z", "market_share": "10%", "strength": "ERP tổng thể", "weakness": "Chi phí quá đắt đỏ so với chuỗi vừa và nhỏ" }
+      ],
+      "customer_demands": {
+        "sample_size": 18,
+        "key_feature_requests": [
+          "Tối ưu lộ trình lấy hàng trong kho",
+          "Dễ dùng cho nhân công phổ thông",
+          "Chi phí triển khai vừa phải"
+        ],
+        "support_requirement": "Onsite 2 ngày đầu triển khai, sau đó chuyển giao Remote Support (Phù hợp năng lực Hưng Phát)"
+      }
+    },
+    {
+      "id": "TERR_03",
+      "name": "Địa bàn Duyên Hải (Trung tâm Du lịch & Cảng C)",
+      "market_reports": [
+        {
+          "source": "Báo cáo Sở Công Thương Duyên Hải",
+          "period": "2022",
+          "retail_chains_count": 120,
+          "estimated_market_value_vnd": "190 tỷ",
+          "annual_growth_rate": "22%",
+          "caution": "Số liệu thống kê cũ từ 2022, chưa cập nhật sau tái cơ cấu các chuỗi bán lẻ du lịch"
+        }
+      ],
+      "competitors": [
+        { "name": "Vendor MegaGlobal", "market_share": "65%", "strength": "Hệ thống toàn cầu mạnh mẽ", "weakness": "Không tùy biến theo đặc thù Việt Nam" }
+      ],
+      "customer_demands": {
+        "sample_size": 30,
+        "key_feature_requests": [
+          "Tự động hóa kho lạnh robotized (Hưng Phát không hỗ trợ)",
+          "Xử lý hàng siêu trọng cảng biển (Hưng Phát không hỗ trợ)"
+        ],
+        "support_requirement": "Bắt buộc kỹ sư túc trực On-site 24/7 tại kho cảng"
+      }
+    },
+    {
+      "id": "TERR_04",
+      "name": "Địa bàn Cao Nguyên (Vùng Phân phối D)",
+      "market_reports": [
+        {
+          "source": "Tạp chí Logistics Nông sản 2024",
+          "period": "2024",
+          "retail_chains_count": 35,
+          "estimated_market_value_vnd": "45 tỷ",
+          "annual_growth_rate": "9%"
+        }
+      ],
+      "competitors": [
+        { "name": "Vendor Cục bộ", "market_share": "25%", "strength": "Mối quan hệ thân thiết với chính quyền", "weakness": "Công nghệ cổ lỗ, chưa có ứng dụng di động" }
+      ],
+      "customer_demands": {
+        "sample_size": 12,
+        "key_feature_requests": [
+          "Quản lý hạn sử dụng nông sản chế biến",
+          "Tích hợp mã vạch cơ bản"
+        ],
+        "support_requirement": "Hỗ trợ từ xa, định kỳ 1 tháng kiểm tra 1 lần"
+      }
+    }
+  ]
+}
+
